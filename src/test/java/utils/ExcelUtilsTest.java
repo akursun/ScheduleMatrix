@@ -1,6 +1,7 @@
 package utils;
 
 import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.CellStyle;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
@@ -9,6 +10,8 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 
 public class ExcelUtilsTest {
+    static Cell cell;
+    static CellStyle cellStyle;
     public static void main(String[] args) throws IOException {
         String excelPath = "./data/StudentSchedule.xlsx";
         String sheetName = "2021-2022 HS Student Schedule";
@@ -33,10 +36,36 @@ public class ExcelUtilsTest {
                 //TODO Get student's classes.
 
                 XSSFWorkbook workbookSc = new XSSFWorkbook();
-                XSSFSheet sheetSc = workbookSc.createSheet(student.name+"'s Schedule");
-                Row rowSc= sheetSc.createRow(4);
-                Cell cellSc = rowSc.createCell(2);
-                cellSc.setCellValue(student.name);
+                XSSFSheet sheetSc = workbookSc.createSheet("Schedule");
+                Row row = sheetSc.createRow(0);
+
+                cell = row.createCell(0);
+                cell.setCellValue("Student:");
+                cell = row.createCell(1);
+                cell.setCellValue(student.name);
+
+                row = sheetSc.createRow(1);
+                cell = row.createCell(0);
+                cell.setCellValue("ID:");
+                cell = row.createCell(1);
+                cell.setCellValue(Integer.parseInt(student.number));
+
+                row = sheetSc.createRow(2);
+                cell = row.createCell(0);
+                cell.setCellValue("Grade:");
+                cell = row.createCell(1);
+                cell.setCellValue(Integer.parseInt(student.grade));
+
+                row = sheetSc.createRow(3);
+                cell = row.createCell(0);
+                cell.setCellValue("Locker:");
+                cell = row.createCell(1);
+                cell.setCellValue(student.lockerCombination);
+
+
+
+
+
                 FileOutputStream fileout = new FileOutputStream("/Users/aliokursun/IdeaProjects/Excel/OutputFiles/"+student.name+"'s Schedule.xlsx");
                 workbookSc.write(fileout);
                 fileout.flush();
@@ -49,6 +78,7 @@ public class ExcelUtilsTest {
 
 
     }
+
 
 
 }
